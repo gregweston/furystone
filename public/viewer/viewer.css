@@ -1,0 +1,21 @@
+body {
+    color: #FFFFFF;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#game-container {
+    height: calc(100vh - 2px);
+    width: calc(100vw - 2px);
+    border: 1px solid transparent;
+}
+#game-container.focused {
+    border-color: #5624ed;
+}
+@font-face {
+    font-family: "Monogram";
+    src: url("../monogram.ttf");
+}

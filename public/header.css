@@ -1,0 +1,40 @@
+@font-face {
+    font-family: "Monogram";
+    src: url("./monogram.ttf");
+}
+@font-palette-values --titlePalette {
+    font-family: "Honk";
+    base-palette: 7;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+header {
+    margin: 0;
+    background-color: #222;    
+    padding: 0 2rem;
+    font-family: monospace;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 6vh;
+    min-height: 2rem;
+}
+#title-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+#title-container img {
+    margin-right: .7rem;
+}
+h1 {
+    font-size: 1.6rem;
+    margin: 0;
+    color: #EEE;
+    font-family: "Honk";
+    font-palette: --titlePalette;
+}

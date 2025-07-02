@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Fury Stone - Game Builder</title>
+        <link rel="icon" type="image/x-icon" href="./stone-icon.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="./header.css"></style>
+        <link rel="stylesheet" type="text/css" href="./builder.css"></style>
+    </head>
+    <body>
+        <header id="heading">
+            <div id="title-container">
+                <img src="./stone-icon.png" width="24px" />
+                <h1>
+                    Fury Stone
+                </h1>
+                <div class="for-hackers">
+                    Game Builder
+                </div>
+            </div>
+            <div id="header-buttons-container">
+                <button id="toggle-hide-viewer">
+                    <span id="toggle-hide-viewer-wording">Hide</span> Game Viewer
+                </button>
+                <button id="show-enemies">
+                    Enemies
+                </button>
+                <button id="show-maps">
+                    Maps
+                </button>
+                <button id="load-code">Load Code</button>
+                </div>
+            </div>
+        </header>
+        <main>
+            <section id="editor-container">
+                <div id="editor"></div>
+                <button id="run">Run</button>
+            </section>
+            <section id="viewer-container">
+                <iframe id="viewer" src="./viewer/viewer.html"></iframe>
+            </section>
+        </main>
+        <dialog id="enemies-dialog" class="builder-options-dialog">
+            <button id="enemies-dialog-close" class="builder-options-dialog-close">&#10005;</button>
+            <ul class="builder-options-grid">
+                <li>
+                    <img src="./enemy-images/chomper_large.png" />
+                    <span>chomper_large</span>
+                </li>
+                <li>
+                    <img src="./enemy-images/chomper_small.png" />
+                    <span>chomper_small</span>
+                </li>
+                <li>
+                    <img src="./enemy-images/chomper_tiny.png" />
+                    <span>chomper_tiny</span>
+                </li>
+                <li>
+                    <img src="./enemy-images/lizard_man.png" />
+                    <span>lizard_man</span>
+                </li>
+                <li>
+                    <img src="./enemy-images/masked_orc.png" />
+                    <span>masked_orc</span>
+                </li>
+                <li>
+                    <img src="./enemy-images/ogre.png" />
+                    <span>ogre</span>
+                </li>
+                <li>
+                    <img src="./enemy-images/skeleton.png" />
+                    <span>skeleton</span>
+                </li>
+                <li>
+                    <img src="./enemy-images/swampy.png" />
+                    <span>swampy</span>
+                </li>
+                <li>
+                    <img src="./enemy-images/warlock.png" />
+                    <span>warlock</span>
+                </li>
+                <li>
+                    <img src="./enemy-images/zombie_ice.png" />
+                    <span>zombie_ice</span>
+                </li>
+                <li>
+                    <img src="./enemy-images/zombie_large.png" />
+                    <span>zombie_large</span>
+                </li>
+                <li>
+                    <img src="./enemy-images/zombie_tiny.png" />
+                    <span>zombie_tiny</span>
+                </li>
+            </ul>
+        </dialog>
+        <dialog id="maps-dialog" class="builder-options-dialog">
+            <button id="maps-dialog-close" class="builder-options-dialog-close">&#10005;</button>
+            <ul class="builder-options-grid">
+                <li>
+                    <img src="./map-images/original.png" />
+                    <span>original</span>
+                </li>
+                <li>
+                    <img src="./map-images/rectangle.png" />
+                    <span>rectangle</span>
+                </li>
+                <li>
+                    <img src="./map-images/stingray.png" />
+                    <span>stingray</span>
+                </li>
+                <li>
+                    <img src="./map-images/skull.png" />
+                    <span>skull</span>
+                </li>
+                <li>
+                    <img src="./map-images/scorpion.png" />
+                    <span>scorpion</span>
+                </li>
+                <li>
+                    <img src="./map-images/rooms.png" />
+                    <span>scorpion</span>
+                </li>
+            </ul>
+        </dialog>
+        <dialog id="load-code-dialog" class="builder-options-dialog">
+            <button id="load-code-dialog-close" class="builder-options-dialog-close">&#10005;</button>
+            <div id="load-code-options" class="builder-options-grid"></div>
+        </dialog>
+        <script src="./editor.min.js"></script>
+        <script type="text/javascript">
+            var maps_dialog = document.getElementById("maps-dialog");
+            var maps_dialog_open = document.getElementById("show-maps");
+            var maps_dialog_close = document.getElementById("maps-dialog-close");
+            var enemies_dialog = document.getElementById("enemies-dialog");
+            var enemies_dialog_open = document.getElementById("show-enemies");
+            var enemies_dialog_close = document.getElementById("enemies-dialog-close");
+            var load_code_dialog = document.getElementById("load-code-dialog");
+            var load_code_dialog_open = document.getElementById("load-code");
+            var load_code_dialog_close = document.getElementById("load-code-dialog-close");
+            
+            maps_dialog_open.addEventListener("click", function() {
+                maps_dialog.showModal();
+            });
+
+            maps_dialog_close.addEventListener("click", function() {
+                maps_dialog.close();
+            });
+
+            enemies_dialog_open.addEventListener("click", function() {
+                enemies_dialog.showModal();
+            });
+
+            enemies_dialog_close.addEventListener("click", function() {
+                enemies_dialog.close();
+            });
+
+            load_code_dialog_open.addEventListener("click", function() {
+                load_code_dialog.showModal();
+            });
+
+            load_code_dialog_close.addEventListener("click", function() {
+                load_code_dialog.close();
+            });
+        </script>
+    </body>
+</html>
