@@ -23,9 +23,9 @@ const editor = new EditorView({
 const load_code_options = document.getElementById("load-code-options");
 const load_code_dialog = document.getElementById("load-code-dialog");
 
-async function loadDefaultCode() {
+async function loadCodeTemplate(name) {
   try {
-    let response = await fetch("./templates/latest.js");
+    let response = await fetch("./templates/" + name + ".js");
     if (response.status === 200) {
 
       let template_code = await response.text();
@@ -44,13 +44,6 @@ async function loadDefaultCode() {
   } catch (error) {
     alert("Something went wrong!");
   }
-}
-
-const query_string = window.location.search;
-const url_params = new URLSearchParams(query_string);
-const code_to_load = url_params.get("code");
-if (code_to_load !== null && code_to_load === "default") {
-  loadDefaultCode();
 }
 
 const viewer_container = document.getElementById("viewer-container");
@@ -194,7 +187,7 @@ if (stored_editor_content_backups !== null && stored_editor_content_backups !== 
   }
 
 }
-
+console.log(latest_editor_content);
 if (latest_editor_content !== null && latest_editor_content !== "") {
 
   editor.dispatch({
@@ -211,6 +204,25 @@ if (latest_editor_content !== null && latest_editor_content !== "") {
     editor.scrollDOM.scrollTop = 0;
   }, 100);
 
+} else {
+  const query_string = window.location.search;
+  const url_params = new URLSearchParams(query_string);
+  const code_to_load = url_params.get("code");
+  if (code_to_load !== null) {
+    switch (code_to_load) {
+      case "default": {
+        loadCodeTemplate("latest");
+        break;
+      }
+      case "basic": {
+        loadCodeTemplate("basic");
+        break;
+      }
+      default: {
+        alert("Template not found.");
+      }
+    }
+  }
 }
 
 document.getElementById("run").addEventListener("click", runUserCode);

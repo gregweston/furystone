@@ -728,7 +728,7 @@ export class GameScene extends Scene {
 
         this.player_attack.anims.play('player_attack_' + type, true);
 
-        if (typeof this.user_defined_callbacks.event.enemy_gets_attacked !== 'undefined') {
+        if (typeof this.user_defined_callbacks.event.attack_contacts_enemy !== 'undefined') {
             this.physics.add.overlap(this.player_attack, this.enemies, this.enemyGetsAttacked, null, this);
         }
 
@@ -978,8 +978,8 @@ export class GameScene extends Scene {
 
             enemy.game_data.last_attack_time = now;
 
-            if (typeof this.user_defined_callbacks.event.player_gets_attacked !== 'undefined') {
-                for (let callback of this.user_defined_callbacks.event.player_gets_attacked) {
+            if (typeof this.user_defined_callbacks.event.enemy_contacts_player !== 'undefined') {
+                for (let callback of this.user_defined_callbacks.event.enemy_contacts_player) {
                     callback(this.game, enemy);
                 }
             }
@@ -993,7 +993,7 @@ export class GameScene extends Scene {
             return;
         }
         
-        for (let callback of this.user_defined_callbacks.event.enemy_gets_attacked) {
+        for (let callback of this.user_defined_callbacks.event.attack_contacts_enemy) {
             callback(this.game, enemy, attack);
         }
 

@@ -137,7 +137,7 @@ function player_gets_attacked(game, enemy) {
         ])
     }
 }
-builder.handle_event("player_gets_attacked", player_gets_attacked)
+builder.handle_event("enemy_contacts_player", player_gets_attacked)
 
 /* Handle enemy being hit by player attack */
 
@@ -160,7 +160,7 @@ function enemy_gets_attacked(game, enemy, attack) {
 
 }
 
-builder.handle_event("enemy_gets_attacked", enemy_gets_attacked)
+builder.handle_event("attack_contacts_enemy", enemy_gets_attacked)
 
 /* Handle end of player attack effect */
 
