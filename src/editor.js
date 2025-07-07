@@ -187,7 +187,6 @@ if (stored_editor_content_backups !== null && stored_editor_content_backups !== 
   }
 
 }
-console.log(latest_editor_content);
 if (latest_editor_content !== null && latest_editor_content !== "") {
 
   editor.dispatch({
@@ -222,6 +221,8 @@ if (latest_editor_content !== null && latest_editor_content !== "") {
         alert("Template not found.");
       }
     }
+  } else {
+    loadCodeTemplate("basic");
   }
 }
 
