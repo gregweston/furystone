@@ -64,7 +64,7 @@ button#run:hover {
 #header-buttons-container button, #header-buttons-container select {
     margin-left: 1rem;
 }
-#header-buttons-container button, .load-code-option {
+#header-buttons-container button, .load-code-snapshot, .load-code-template {
     font-family: "Monogram", monospace;
     color: #5624ed;
     padding: .2rem .4rem;
@@ -81,11 +81,11 @@ button#run:hover {
 #load-code-dialog {
     background-color: #222;
 }
-#load-code-options {
+#load-code-snapshots, #load-code-templates {
     grid-gap: 1rem;
     padding: 2rem;  
 }
-.load-code-option {
+.load-code-snapshot, .load-code-template {
     font-size: 1.8rem;
     color: #EEE;
     background-color: #5624ed;
@@ -133,6 +133,14 @@ button#run:hover {
 }
 .builder-options-dialog {
     border: 1px solid #5624ed;
+}
+.builder-options-dialog h4 {
+    font-family: "Monogram", monospace;
+    text-align: center;
+    font-size: 1.8rem;
+    color: #FFFFFF;
+    margin: 1rem 0;
+    clear: both;
 }
 .builder-options-dialog-close {
     float: right;

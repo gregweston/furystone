@@ -628,11 +628,6 @@ export class GameScene extends Scene {
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.cameras.main.startFollow(this.player);
 
-        /*this.input.on('pointermove', pointer => {
-            this.cameras.main.centerOnX(pointer.position.x);
-            this.cameras.main.centerOnY(pointer.position.y);
-        })*/
-
         this.cursors = this.input.keyboard.createCursorKeys();
 
         uiScene.events.on("game_start", () => {

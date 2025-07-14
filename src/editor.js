@@ -20,8 +20,24 @@ const editor = new EditorView({
   dark: true
 });
 
-const load_code_options = document.getElementById("load-code-options");
 const load_code_dialog = document.getElementById("load-code-dialog");
+const load_code_snapshots_container = document.getElementById("load-code-snapshots");
+const load_code_templates = document.querySelectorAll(".load-code-template");
+
+const viewer_container = document.getElementById("viewer-container");
+const hide_viewer_button = document.getElementById("toggle-hide-viewer");
+const hide_viewer_wording = document.getElementById("toggle-hide-viewer-wording");
+
+const viewer_iframe = document.getElementById("viewer");
+
+let reload_listener_set = false;
+let last_editor_content_snapshot = null;
+
+let editor_keyup_timeout = null;
+
+let stored_editor_content_backups = localStorage.getItem("editor_content_backups");
+let latest_editor_content = localStorage.getItem("editor_content");
+let editor_content_backups = [];
 
 async function loadCodeTemplate(name) {
   try {
@@ -46,9 +62,13 @@ async function loadCodeTemplate(name) {
   }
 }
 
-const viewer_container = document.getElementById("viewer-container");
-const hide_viewer_button = document.getElementById("toggle-hide-viewer");
-const hide_viewer_wording = document.getElementById("toggle-hide-viewer-wording");
+load_code_templates.forEach(function(button) {
+  button.addEventListener("click", function() {
+    let template_name = button.dataset.template;
+    loadCodeTemplate(template_name);
+    load_code_dialog.close();
+  });
+});
 
 hide_viewer_button.addEventListener("click", function() {
   if (viewer_container.classList.contains("hidden")) {
@@ -60,19 +80,13 @@ hide_viewer_button.addEventListener("click", function() {
   }
 });
 
-const viewer_iframe = document.getElementById("viewer");
-
-let reload_listener_set = false;
-
-let last_editor_content_snapshot = null;
-
-function addLoadCodeTimestampOption(timestamp) {
+function addLoadCodeSnapshot(timestamp) {
 
   let load_code_button = document.createElement("button");
-  load_code_button.classList.add("load-code-option");
+  load_code_button.classList.add("load-code-snapshot");
   load_code_button.setAttribute("data-timestamp", timestamp);
   load_code_button.innerText = timestamp;
-  load_code_options.prepend(load_code_button);
+  load_code_snapshots_container.prepend(load_code_button);
 
   load_code_button.addEventListener("click", function() {
 
@@ -98,23 +112,27 @@ function saveEditorContent() {
   let now = new Date();
   let now_timestamp = now.getTime();
   if (now_timestamp - last_editor_content_snapshot >= 60000) {
-    if (editor_content_backups.length >= 6) {
+    if (editor_content_backups.length >= 4) {
       editor_content_backups.pop();
-      document.querySelector(".load-code-option:nth-child(6)").remove();
+      document.querySelector(".load-code-snapshot:nth-child(6)").remove();
     }
   
-    let formatted_minutes = now.getMinutes().toString();
-    if (formatted_minutes.length < 2) {
-      formatted_minutes = "0".concat(formatted_minutes);
+    let minute = now.getMinutes().toString();
+    if (minute.length < 2) {
+      minute = "0".concat(minute);
     }
+    let hour = now.getHours();
+    let day = now.getDate();
+    let month = now.getMonth() + 1;
+    
+    let formatted_timestamp = `${month}/${day} ${hour}:${minute}`;
 
-    let formatted_timestamp = now.getHours() + ':' + formatted_minutes;
     editor_content_backups.unshift({
       content: current_editor_content,
       timestamp: formatted_timestamp
     });
 
-    addLoadCodeTimestampOption(formatted_timestamp);
+    addLoadCodeSnapshot(formatted_timestamp);
 
     last_editor_content_snapshot = now;
 
@@ -162,17 +180,11 @@ function runUserCode() {
 
 }
 
-let editor_keyup_timeout = null;
-
 editor.contentDOM.addEventListener("blur", saveEditorContent);
 editor.contentDOM.addEventListener("keyup", function() {
   clearTimeout(editor_keyup_timeout);
   editor_keyup_timeout = setTimeout(saveEditorContent, 500);
 });
-
-let stored_editor_content_backups = localStorage.getItem("editor_content_backups");
-let latest_editor_content = localStorage.getItem("editor_content");
-let editor_content_backups = [];
 
 if (stored_editor_content_backups !== null && stored_editor_content_backups !== "") {
 
@@ -180,7 +192,7 @@ if (stored_editor_content_backups !== null && stored_editor_content_backups !== 
     editor_content_backups = JSON.parse(stored_editor_content_backups);
     for (let i = editor_content_backups.length - 1; i >= 0; i--) {
       let backup = editor_content_backups[i];
-      addLoadCodeTimestampOption(backup.timestamp);
+      addLoadCodeSnapshot(backup.timestamp);
     }
   } catch (e) {
     editor_content_backups = [];
@@ -203,27 +215,6 @@ if (latest_editor_content !== null && latest_editor_content !== "") {
     editor.scrollDOM.scrollTop = 0;
   }, 100);
 
-} else {
-  const query_string = window.location.search;
-  const url_params = new URLSearchParams(query_string);
-  const code_to_load = url_params.get("code");
-  if (code_to_load !== null) {
-    switch (code_to_load) {
-      case "default": {
-        loadCodeTemplate("latest");
-        break;
-      }
-      case "basic": {
-        loadCodeTemplate("basic");
-        break;
-      }
-      default: {
-        alert("Template not found.");
-      }
-    }
-  } else {
-    loadCodeTemplate("basic");
-  }
 }
 
 document.getElementById("run").addEventListener("click", runUserCode);
