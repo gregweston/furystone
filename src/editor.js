@@ -30,6 +30,15 @@ const hide_viewer_wording = document.getElementById("toggle-hide-viewer-wording"
 
 const viewer_iframe = document.getElementById("viewer");
 
+const maps_dialog = document.getElementById("maps-dialog");
+const maps_dialog_open = document.getElementById("show-maps");
+const maps_dialog_close = document.getElementById("maps-dialog-close");
+const enemies_dialog = document.getElementById("enemies-dialog");
+const enemies_dialog_open = document.getElementById("show-enemies");
+const enemies_dialog_close = document.getElementById("enemies-dialog-close");
+const load_code_dialog_open = document.getElementById("load-code");
+const load_code_dialog_close = document.getElementById("load-code-dialog-close");
+
 let reload_listener_set = false;
 let last_editor_content_snapshot = null;
 
@@ -216,5 +225,29 @@ if (latest_editor_content !== null && latest_editor_content !== "") {
   }, 100);
 
 }
+
+maps_dialog_open.addEventListener("click", function() {
+  maps_dialog.showModal();
+});
+
+maps_dialog_close.addEventListener("click", function() {
+  maps_dialog.close();
+});
+
+enemies_dialog_open.addEventListener("click", function() {
+  enemies_dialog.showModal();
+});
+
+enemies_dialog_close.addEventListener("click", function() {
+  enemies_dialog.close();
+});
+
+load_code_dialog_open.addEventListener("click", function() {
+  load_code_dialog.showModal();
+});
+
+load_code_dialog_close.addEventListener("click", function() {
+  load_code_dialog.close();
+});
 
 document.getElementById("run").addEventListener("click", runUserCode);
